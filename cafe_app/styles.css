@@ -1,0 +1,63 @@
+/* filepath: d:\BMSIT\4sem\dbms\cafe_app\styles.css */
+/* General Navigation Bar Styles */
+.top-nav {
+    display: flex;
+    justify-self: center;
+    justify-content: center; /* Aligns items to the right */
+    justify-items: flex-end;
+    gap: 20px;
+    padding: 15px;
+    position: fixed;
+    top: 0%;
+    width: 98%;
+    background: rgba(255, 255, 255, 0.1); /* Glassmorphism effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    border-radius: 10px;
+}
+
+/* Navigation Links */
+.top-nav a {
+    color: #040028;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    transition: 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+.top-nav a:hover {
+    color: #FFD700; /* Gold accent */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .top-nav {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #fdf6f8;
+    padding-top: 80px;
+}
+
+h1 {
+    color: #c9acdc;
+}
+
+button {
+    padding: 10px;
+    background-color: #b2c8e9;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #cec8f2;
+}
