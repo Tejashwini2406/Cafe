@@ -1,25 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Place Order</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Order Menu</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Place an Order</h1>
-    <form id="orderForm">
-        <div>
-            <input type="number" id="customerId" placeholder="Customer ID" required>
-            <input type="number" id="totalAmount" placeholder="Total Amount" required>
-            <select id="paymentMethod">
-                <option value="Credit Card">Credit Card</option>
-                <option value="Cash">Cash</option>
-                <option value="UPI">UPI</option>
-            </select>
+  <div class="overlay">
+    <header>
+      <div class="logo">TastyTable</div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+        <a href="cart.html">Cart</a>
+        <a href="order.html">Order</a>
+      </nav>
+    </header>
+    <div class="order-box">
+      <h2>Our Menu</h2>
+      <div class="menu-grid">
+        <div class="menu-item">
+          <h3>Burger</h3>
+          <p>$8</p>
+          <button>Add to Cart</button>
         </div>
-        <button type="submit">Submit Order</button>
-    </form>
-    <p id="order-message"></p>
-    <script src="script.js"></script>
+        <div class="menu-item">
+          <h3>Pizza</h3>
+          <p>$12</p>
+          <button>Add to Cart</button>
+        </div>
+        <div class="menu-item">
+          <h3>Pasta</h3>
+          <p>$10</p>
+          <button>Add to Cart</button>
+        </div>
+        <div class="menu-item">
+          <h3>Salad</h3>
+          <p>$6</p>
+          <button>Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
