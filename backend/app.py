@@ -14,7 +14,7 @@ app.secret_key = os.environ.get('SECRET_KEY', 'devsecret')
 # MariaDB connection
 conn = mariadb.connect(
     user='root',
-    password='T&p@2006',
+    password='pp',
     host='localhost',
     port=3306,
     database='CafeOrderSystem'
@@ -24,8 +24,8 @@ cursor = conn.cursor()
 # Flask-Mail config (use a test SMTP or console for dev)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
-app.config['MAIL_USERNAME'] = 'tejashwinisuranakar@gmail.com'
-app.config['MAIL_PASSWORD'] = 'asoc alhk gnqd jxex'
+app.config['MAIL_USERNAME'] = 'email@gmail.com'
+app.config['MAIL_PASSWORD'] = 'ncj'
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 mail = Mail(app)
