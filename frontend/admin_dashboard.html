@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - CuteCafe</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar glass">
+        <div class="logo">☕ CuteCafe Admin</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="login.html">Logout</a></li>
+        </ul>
+    </nav>
+    <main class="glass home-main">
+        <h2>Order Management</h2>
+        <div id="admin-orders-list"></div>
+        <form id="addOrderForm" class="glass menu-item" style="margin-top:2rem;">
+            <h4>Add Order (Demo)</h4>
+            <label>User:
+                <select name="user_id" id="orderUserSelect" required></select>
+            </label><br>
+            <label>Menu Items:
+                <select name="menu_ids" id="orderMenuSelect" multiple required style="height:80px;"></select>
+            </label><br>
+            <label>Quantities (comma separated for each menu item):
+                <input type="text" name="quantities" placeholder="e.g. 1,2,1" required>
+            </label><br>
+            <button type="submit">Add Order</button>
+        </form>
+        <h2>Payments</h2>
+        <div id="admin-payments-list"></div>
+        <h2>Suppliers & Inventory</h2>
+        <div id="admin-suppliers-list"></div>
+        <div id="admin-inventory-list"></div>
+        <h2>User Management</h2>
+        <div id="admin-users-list"></div>
+        <form id="addUserForm" class="glass menu-item" style="margin-top:2rem;">
+            <h4>Add User</h4>
+            <input type="text" name="username" placeholder="Username" required><br>
+            <input type="password" name="password" placeholder="Password" required><br>
+            <input type="email" name="email" placeholder="Email" required><br>
+            <select name="is_admin">
+                <option value="0">User</option>
+                <option value="1">Admin</option>
+            </select><br>
+            <button type="submit">Add User</button>
+        </form>
+        <div style="margin-top:2rem;">
+            <a href="user_management.html" style="background:#6d4c41;color:#fff;padding:0.7rem 1.5rem;border-radius:0.7rem;text-decoration:none;font-weight:bold;">Go to User Management Page</a>
+            <a href="#" onclick="location.reload()" style="background:#6d4c41;color:#fff;padding:0.7rem 1.5rem;border-radius:0.7rem;text-decoration:none;font-weight:bold;">Refresh Dashboard</a>
+        </div>
+    </main>
+    <script src="admin_dashboard.js"></script>
+    <script>
+// Populate user and menu selects for Add Order
+fetch('http://localhost:5000/api/admin/users', { credentials: 'include' })
+  .then(r => r.json())
+  .then(users => {
+    const userSel = document.getElementById('orderUserSelect');
+    users.forEach(u => {
+      const opt = document.createElement('option');
+      opt.value = u.id;
+      opt.textContent = `${u.username} (${u.email})`;
+      userSel.appendChild(opt);
+    });
+  });
+fetch('http://localhost:5000/api/menu')
+  .then(r => r.json())
+  .then(menu => {
+    const menuSel = document.getElementById('orderMenuSelect');
+    menu.forEach(m => {
+      const opt = document.createElement('option');
+      opt.value = m.id;
+      opt.textContent = `${m.name} (₹${m.price})`;
+      menuSel.appendChild(opt);
+    });
+  });
+document.getElementById('addOrderForm').onsubmit = async function(e) {
+  e.preventDefault();
+  const user_id = this.user_id.value;
+  const menu_ids = Array.from(this.menu_ids.selectedOptions).map(o => o.value);
+  const quantities = this.quantities.value.split(',').map(x => x.trim());
+  if (menu_ids.length !== quantities.length) {
+    alert('Number of menu items and quantities must match!');
+    return;
+  }
+  const items = menu_ids.map((id, i) => ({ menu_id: parseInt(id), quantity: parseInt(quantities[i]) }));
+  await fetch('http://localhost:5000/api/admin/orders', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ user_id, items })
+  });
+  location.reload();
+};
+document.getElementById('addUserForm').onsubmit = async function(e) {
+  e.preventDefault();
+  const username = this.username.value;
+  const password = this.password.value;
+  const email = this.email.value;
+  const is_admin = this.is_admin.value === '1';
+  await fetch('http://localhost:5000/api/admin/users', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ username, password, email, is_admin })
+  });
+  location.reload();
+};
+</script>
+</body>
+</html>
